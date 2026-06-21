@@ -13,6 +13,7 @@ SOLLICITATIE_CATEGORY_ID = int(os.getenv("SOLLICITATIE_CATEGORY_ID"))
 ZAKENPARTNER_CATEGORY_ID = int(os.getenv("ZAKENPARTNER_CATEGORY_ID"))
 LEAD_ROLE_ID = int(os.getenv("LEAD_ROLE_ID"))
 SMOKE_ROLE_ID = int(os.getenv("SMOKE_ROLE_ID"))
+TRANSCRIPT_CHANNEL_ID = int(os.getenv("TRANSCRIPT_CHANNEL_ID"))
 
 MAX_PLEKKEN = 25
 STATUS_FILE = "status_message_data.json"
@@ -198,6 +199,17 @@ class CloseView(discord.ui.View):
                 await interaction.channel.send(
                     f"⚠️ Kon geen DM sturen naar {ticket_owner.mention}."
                 )
+
+        transcript_channel = interaction.guild.get_channel(TRANSCRIPT_CHANNEL_ID)
+
+        if transcript_channel:
+            try:
+                await transcript_channel.send(
+                    f"📄 Transcript van ticket **{interaction.channel.name}**",
+                    file=discord.File(bestandsnaam)
+                )
+            except Exception as e:
+                print(f"Transcript kanaal fout: {e}")
 
         try:
             os.remove(bestandsnaam)
