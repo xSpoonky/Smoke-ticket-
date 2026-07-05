@@ -320,7 +320,6 @@ Extra dingen die wij van jou zouden moeten weten.
 """
 
     await kanaal.send(tekst, view=CloseView())
-    await kanaal.send("📢 **Als je dit liever mondeling wilt doen laat het zeker weten.**")
 
     await interaction.response.send_message(
         f"✅ Je ticket is geopend: {kanaal.mention}",
